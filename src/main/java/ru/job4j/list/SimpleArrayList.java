@@ -5,8 +5,8 @@ import java.util.*;
 public class SimpleArrayList<T> implements List<T> {
 
     private T[] container;
-    private int size;
-    private int modCount;
+    private int size = 0;
+    private int modCount = 0;
 
     public SimpleArrayList(int capacity) {
         this.container = (T[]) new Object[capacity];
@@ -15,25 +15,28 @@ public class SimpleArrayList<T> implements List<T> {
     @Override
     public void add(T value) {
         if (container.length == size) {
-            container = Arrays.copyOf(container, container.length * 2);
+            increaseSize();
         }
         container[size] = value;
         size++;
         modCount++;
     }
 
+    private void increaseSize() {
+        int len = container.length == 0 ? 1 : container.length;
+        container = Arrays.copyOf(container, len * 2);
+    }
+
     @Override
     public T set(int index, T newValue) {
-        Objects.checkIndex(index, size);
-        T tmp = container[index];
+        T tmp = get(index);
         container[index] = newValue;
         return tmp;
     }
 
     @Override
     public T remove(int index) {
-        Objects.checkIndex(index, size);
-        T tmp = container[index];
+        T tmp = get(index);
         System.arraycopy(container, index + 1, container, index, size - index - 1);
         container[size - 1] = null;
         size--;
