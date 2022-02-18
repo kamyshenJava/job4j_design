@@ -7,8 +7,8 @@ import java.util.Objects;
 
 public class SimpleLinkedList<E> implements List<E> {
 
-    transient Node<E> first;
-    transient Node<E> last = new Node<>(null, null, null);
+    private transient Node<E> first;
+    private transient Node<E> last = new Node<>(null, null, null);
     private int size = 0;
     private int modCount = 0;
 
@@ -50,7 +50,6 @@ public class SimpleLinkedList<E> implements List<E> {
     public Iterator<E> iterator() {
         return new Iterator<>() {
             private int expectedModCount = modCount;
-            private int currCount = 0;
             private Node<E> currNode = first;
 
             @Override
@@ -58,7 +57,7 @@ public class SimpleLinkedList<E> implements List<E> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                return currCount < size;
+                return currNode != null;
             }
 
             @Override
@@ -68,7 +67,6 @@ public class SimpleLinkedList<E> implements List<E> {
                 }
                 E rsl = currNode.item;
                 currNode = currNode.next;
-                currCount++;
                 return rsl;
             }
         };
