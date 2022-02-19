@@ -3,32 +3,23 @@ package ru.job4j.collection.list;
 public class SimpleQueue<T> {
     private final SimpleStack<T> in = new SimpleStack<>();
     private final SimpleStack<T> out = new SimpleStack<>();
-    int count;
-    boolean pushLast;
+    private int countIn;
+    private int countOut;
 
     public T poll() {
-        if (pushLast) {
-            int tempCount = count;
-            while (tempCount != 0) {
+        if (countOut == 0) {
+            while (countIn != 0) {
                 out.push(in.pop());
-                tempCount--;
+                countOut++;
+                countIn--;
             }
         }
-        count--;
-        pushLast = false;
+        countOut--;
         return out.pop();
     }
 
     public void push(T value) {
-        if (!pushLast) {
-            int tempCount = count;
-            while (tempCount != 0) {
-                in.push(out.pop());
-                tempCount--;
-            }
-        }
         in.push(value);
-        count++;
-        pushLast = true;
+        countIn++;
     }
 }
