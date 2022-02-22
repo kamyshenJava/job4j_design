@@ -1,14 +1,8 @@
 package ru.job4j.tree;
 
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
-
+import org.junit.Test;
 
 public class SimpleTreeTest {
     @Test
@@ -65,5 +59,27 @@ public class SimpleTreeTest {
                 is(tree.findBy(4).get().children.get(0).value));
         assertThat(6,
                 is(tree.findBy(5).get().children.get(0).value));
+    }
+
+    @Test
+    public void whenIsBinaryFalse() {
+        SimpleTree<Integer> tree = new SimpleTree<>(1);
+        tree.add(1, 2);
+        tree.add(1, 3);
+        tree.add(1, 4);
+        tree.add(4, 5);
+        tree.add(5, 6);
+        assertFalse(tree.isBinary());
+    }
+
+    @Test
+    public void whenIsBinaryTrue() {
+        SimpleTree<Integer> tree = new SimpleTree<>(1);
+        tree.add(1, 2);
+        tree.add(1, 3);
+        tree.add(2, 4);
+        tree.add(4, 5);
+        tree.add(5, 6);
+        assertTrue(tree.isBinary());
     }
 }
