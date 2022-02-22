@@ -1,6 +1,7 @@
 package ru.job4j.tree;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 public class SimpleTree<E> implements Tree<E> {
     private final Node<E> root;
@@ -11,9 +12,10 @@ public class SimpleTree<E> implements Tree<E> {
 
     @Override
     public boolean add(E parent, E child) {
-        boolean rsl = findBy(parent).isPresent() && findBy(child).isEmpty();
+        Optional<Node<E>> tmp = findBy(parent);
+        boolean rsl = tmp.isPresent() && findBy(child).isEmpty();
         if (rsl) {
-            findBy(parent).get().children.add(new Node<>(child));
+            tmp.get().children.add(new Node<>(child));
         }
         return rsl;
     }
@@ -32,6 +34,10 @@ public class SimpleTree<E> implements Tree<E> {
             data.addAll(el.children);
         }
         return rsl;
+    }
+
+    private Optional<Node<E>> findByPredicate(Predicate<Node<E>> condition) {
+        return Optional.empty();
     }
 }
 
