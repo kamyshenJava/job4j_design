@@ -24,13 +24,6 @@ public class SimpleMapTest {
     }
 
     @Test
-    public void whenPutToEmptyMapWithKeyNullThenGet() {
-        SimpleMap<String, Integer> table = new SimpleMap<>();
-        table.put(null, 1);
-        assertThat(1, is(table.get(null)));
-    }
-
-    @Test
     public void whenPutDublicateThenFalse() {
         SimpleMap<String, Integer> table = new SimpleMap<>();
         table.put("one", 1);

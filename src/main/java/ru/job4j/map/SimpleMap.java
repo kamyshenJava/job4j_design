@@ -13,14 +13,15 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean put(K key, V value) {
-        boolean rsl = table[indexFor(hash(Objects.hashCode(key)))] == null;
+        if (count >= capacity * LOAD_FACTOR) {
+            expand();
+        }
+        int tmp = indexFor(hash(key.hashCode()));
+        boolean rsl = table[tmp] == null;
         if (rsl) {
-            table[indexFor(hash(Objects.hashCode(key)))] = new MapEntry<>(key, value);
+            table[tmp] = new MapEntry<>(key, value);
             count++;
             modCount++;
-            if (count >= capacity * LOAD_FACTOR) {
-                expand();
-            }
         }
         return rsl;
     }
@@ -40,19 +41,24 @@ public class SimpleMap<K, V> implements Map<K, V> {
         table = expandedTable;
 
         for (int i = 0; i < tmp.length; i++) {
-            this.put(tmp[i].key, tmp[i].value);
+            if (tmp[i] != null) {
+                this.put(tmp[i].key, tmp[i].value);
+                count--;
+            }
         }
     }
 
     @Override
     public V get(K key) {
-        return table[indexFor(hash(Objects.hashCode(key)))] == null
-                ? null : table[indexFor(hash(Objects.hashCode(key)))].value;
+        MapEntry<K, V> tmp = table[indexFor(hash(key.hashCode()))];
+        return tmp != null && tmp.key.equals(key)
+                ? tmp.value : null;
     }
 
     @Override
     public boolean remove(K key) {
-        boolean rsl = table[indexFor(hash(Objects.hashCode(key)))] != null;
+        MapEntry<K, V> tmp = table[indexFor(hash(key.hashCode()))];
+        boolean rsl = tmp != null && tmp.key.equals(key);
         if (rsl) {
             table[indexFor(hash(Objects.hashCode(key)))] = null;
             count--;
