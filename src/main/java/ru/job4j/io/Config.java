@@ -22,7 +22,7 @@ public class Config {
                     .filter(x -> !x.equals(""))
                     .filter(x -> !x.startsWith("#"))
                     .filter(this::checkThePattern)
-                    .map(x -> x.split("="))
+                    .map(x -> x.split("=", 2))
                     .forEach(x -> values.put(x[0], x[1]));
         } catch (IOException e) {
             e.printStackTrace();
