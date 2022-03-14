@@ -38,6 +38,6 @@ public class LogFilter {
         LogFilter logFilter = new LogFilter();
         List<String> log = logFilter.filter("log.txt");
         log.forEach(System.out::println);
-        logFilter.save(log, "filteredLog.txt");
+        logFilter.save(log, "filteredLogNew.txt");
     }
 }
