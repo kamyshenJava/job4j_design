@@ -30,8 +30,8 @@ public class Config {
     }
 
     private boolean checkThePattern(String str) throws IllegalArgumentException {
-        String[] tmp = str.split("=");
-        boolean rsl = tmp.length == 2 && !tmp[0].isEmpty() && !tmp[1].isEmpty();
+        String[] tmp = str.split("=", 2);
+        boolean rsl = !tmp[0].isEmpty() && !tmp[1].isEmpty();
         if (!rsl) {
             throw new IllegalArgumentException();
         }
