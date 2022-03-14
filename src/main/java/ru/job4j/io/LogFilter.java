@@ -10,7 +10,7 @@ public class LogFilter {
         List<String> rsl = new ArrayList<>();
         try (BufferedReader in = new BufferedReader(new FileReader(file))) {
             rsl = in.lines()
-                    .filter(LogFilter::has404)
+                    .filter(this::has404)
                     .collect(Collectors.toList());
         } catch (Exception e) {
             e.printStackTrace();
@@ -18,7 +18,7 @@ public class LogFilter {
         return rsl;
     }
 
-    public static void save(List<String> log, String file) {
+    public void save(List<String> log, String file) {
         try (PrintWriter out = new PrintWriter(
                 new BufferedOutputStream(
                         new FileOutputStream(file)
@@ -29,7 +29,7 @@ public class LogFilter {
         }
     }
 
-    private static boolean has404(String str) {
+    private boolean has404(String str) {
         String[] strArr = str.split(" ", -2);
         return strArr[strArr.length - 2].equals("404");
     }
@@ -38,6 +38,6 @@ public class LogFilter {
         LogFilter logFilter = new LogFilter();
         List<String> log = logFilter.filter("log.txt");
         log.forEach(System.out::println);
-        save(log, "filteredLog.txt");
+        logFilter.save(log, "filteredLog.txt");
     }
 }
