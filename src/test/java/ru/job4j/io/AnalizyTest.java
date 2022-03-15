@@ -34,8 +34,8 @@ public class AnalizyTest {
             in.lines()
                     .forEach(rsl::add);
         }
-        assertThat(rsl.toString(), is("10:57:01;10:59:01;" + ln +
-                "11:01:02;11:02:02;"));
+        assertThat(rsl.toString(), is("10:57:01;10:59:01;" + ln
+                + "11:01:02;11:02:02;"));
     }
 
     @Test
