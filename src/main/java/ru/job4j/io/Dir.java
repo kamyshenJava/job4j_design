@@ -13,8 +13,7 @@ public class Dir {
         }
         System.out.println(String.format("The directory's size : %s", file.getTotalSpace()));
         for (File subfile : file.listFiles()) {
-            String[] tmp = subfile.getAbsolutePath().split("\\\\");
-            System.out.println(tmp[tmp.length - 1]);
+            System.out.println(subfile.getName());
             System.out.println(String.format("the file's size : %s", subfile.length()));
         }
     }
