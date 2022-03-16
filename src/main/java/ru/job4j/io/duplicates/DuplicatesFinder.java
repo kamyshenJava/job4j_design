@@ -7,6 +7,7 @@ import java.util.List;
 
 public class DuplicatesFinder {
     public static void main(String[] args) throws IOException {
+
         DuplicatesVisitor duplicatesVisitor = new DuplicatesVisitor();
         Files.walkFileTree(Path.of("C:\\projects"), duplicatesVisitor);
         for (List<Path> value : duplicatesVisitor.getFilePaths().values()) {
