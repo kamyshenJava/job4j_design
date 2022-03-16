@@ -17,7 +17,7 @@ public class ArgsName {
         }
         for (String arg : args) {
             String[] entry = arg.split("=", 2);
-            if (entry[0].isEmpty() || entry[1].isEmpty()) {
+            if (entry[0].isEmpty() || entry[1].isEmpty() || !entry[0].startsWith("-")) {
                 throw new IllegalArgumentException();
             }
             values.put(entry[0].substring(1), entry[1]);
