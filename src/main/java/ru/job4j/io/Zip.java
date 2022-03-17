@@ -13,29 +13,17 @@ public class Zip {
     public void packFiles(List<Path> sources, Path target) {
         try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(Files.newOutputStream(target)))) {
             for (Path source : sources) {
-                putNextEntryAndThenWrite(zip, source);
+                zip.putNextEntry(new ZipEntry(source.toString()));
+                try (BufferedInputStream in = new BufferedInputStream(Files.newInputStream(source))) {
+                    zip.write(in.readAllBytes());
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void packSingleFile(Path source, Path target) {
-        try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(Files.newOutputStream(target)))) {
-            putNextEntryAndThenWrite(zip, source);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void putNextEntryAndThenWrite(ZipOutputStream zip, Path source) throws IOException {
-        zip.putNextEntry(new ZipEntry(source.toString()));
-        try (BufferedInputStream in = new BufferedInputStream(Files.newInputStream(source))) {
-            zip.write(in.readAllBytes());
-        }
-    }
-
-    public static void main(String[] args) throws IOException {
+    private String[] validateArgs(String[] args) {
         ArgsName argsNames = ArgsName.of(args);
         String dir = argsNames.get("d");
         String exclude = argsNames.get("e");
@@ -44,11 +32,16 @@ public class Zip {
                 || !Files.isDirectory(Path.of(dir))) {
             throw new IllegalArgumentException();
         }
-        List<Path> filteredPaths = Search.search(Path.of(dir),
-                p -> !p.toString().endsWith(exclude)).stream()
-                .map(x -> Path.of(dir).relativize(x))
-                .collect(Collectors.toList());
+        return new String[]{dir, exclude, output};
+    }
+
+    public static void main(String[] args) throws IOException {
         Zip zip = new Zip();
-        zip.packFiles(filteredPaths, Path.of(output));
+        String[] vArgs =  zip.validateArgs(args);
+        List<Path> filteredPaths = Search.search(Path.of(vArgs[0]),
+                p -> !p.toString().endsWith(vArgs[1])).stream()
+                .map(x -> Path.of(vArgs[0]).relativize(x))
+                .collect(Collectors.toList());
+        zip.packFiles(filteredPaths, Path.of(vArgs[2]));
     }
 }
