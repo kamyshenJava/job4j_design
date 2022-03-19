@@ -74,7 +74,7 @@ public class CSVReaderTest {
         File file = temporaryFolder.newFile("source.csv");
         File target = temporaryFolder.newFile("target.csv");
         ArgsName argsName = ArgsName.of(new String[]{
-                "-path=" + file.getAbsolutePath(), "-delimiter=;", "-out=;" + target.getAbsolutePath(), "-filter=name,age"
+                "-path=" + file.getAbsolutePath(), "-delimiter=;", "-out=;;" + target.getAbsolutePath(), "-filter=name,age"
         });
         CSVReader.handle(argsName);
     }
