@@ -19,8 +19,8 @@ public class EchoServer {
                         System.out.println(str);
                     }
                     out.flush();
-                    if ("Bye".equals(firstStr.substring(0, firstStr.lastIndexOf(" HTTP/1.1"))
-                            .split("=")[1])) {
+                    if ("Bye".equals(firstStr.
+                            substring(firstStr.indexOf("=") + 1, firstStr.lastIndexOf(" HTTP/1.1")))) {
                         server.close();
                         System.out.println("The server has been closed.");
                     }
