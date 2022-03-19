@@ -68,14 +68,4 @@ public class CSVReaderTest {
         });
         CSVReader.handle(argsName);
     }
-
-    @Test(expected = InvalidPathException.class)
-    public void whenWrongOutPath() throws Exception {
-        File file = temporaryFolder.newFile("source.csv");
-        File target = temporaryFolder.newFile("target.csv");
-        ArgsName argsName = ArgsName.of(new String[]{
-                "-path=" + file.getAbsolutePath(), "-delimiter=;", "-out=;;" + target.getAbsolutePath(), "-filter=name,age"
-        });
-        CSVReader.handle(argsName);
-    }
 }
