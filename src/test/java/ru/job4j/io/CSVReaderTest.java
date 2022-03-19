@@ -40,7 +40,7 @@ public class CSVReaderTest {
         Assert.assertEquals(expected, Files.readString(target.toPath()));
     }
 
-    @Test (expected = InvalidPathException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void whenWrongPath() throws Exception {
         File file = temporaryFolder.newFile("source.csv");
         File target = temporaryFolder.newFile("target.csv");
@@ -50,7 +50,7 @@ public class CSVReaderTest {
         CSVReader.handle(argsName);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void whenPathIsNotFile() throws Exception {
         File target = temporaryFolder.newFile("target.csv");
         ArgsName argsName = ArgsName.of(new String[]{
@@ -59,7 +59,7 @@ public class CSVReaderTest {
         CSVReader.handle(argsName);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void whenWrongDelimiter() throws Exception {
         File file = temporaryFolder.newFile("source.csv");
         File target = temporaryFolder.newFile("target.csv");
@@ -69,12 +69,12 @@ public class CSVReaderTest {
         CSVReader.handle(argsName);
     }
 
-    @Test (expected = InvalidPathException.class)
+    @Test(expected = InvalidPathException.class)
     public void whenWrongOutPath() throws Exception {
         File file = temporaryFolder.newFile("source.csv");
         File target = temporaryFolder.newFile("target.csv");
         ArgsName argsName = ArgsName.of(new String[]{
-                "-path=" + file.getAbsolutePath(), "-delimiter=;", "-out=/" + target.getAbsolutePath(), "-filter=name,age"
+                "-path=" + file.getAbsolutePath(), "-delimiter=;", "-out=;" + target.getAbsolutePath(), "-filter=name,age"
         });
         CSVReader.handle(argsName);
     }
