@@ -18,13 +18,17 @@ public class EchoServer {
                             substring(firstStr.indexOf("=") + 1, firstStr.lastIndexOf(" HTTP/1.1"));
                     System.out.println(firstStr);
                     switch (par) {
-                        case "Hello" -> out.write("Hello!".getBytes());
-                        case "Exit" -> {
+                        case "Hello" :
+                            out.write("Hello!".getBytes());
+                            break;
+                        case "Exit" :
                             out.flush();
                             server.close();
                             System.out.println("The server has been closed.");
-                        }
-                        default -> out.write("What?".getBytes());
+                            break;
+                        default:
+                            out.write("What?".getBytes());
+                            break;
                     }
                     out.flush();
                 }
