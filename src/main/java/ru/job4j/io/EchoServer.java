@@ -17,20 +17,16 @@ public class EchoServer {
                     String par = firstStr.
                             substring(firstStr.indexOf("=") + 1, firstStr.lastIndexOf(" HTTP/1.1"));
                     System.out.println(firstStr);
-                    for (String str = in.readLine(); str != null && !str.isEmpty(); str = in.readLine()) {
-                        System.out.println(str);
-                    }
-                    if ("Hello".equals(par)) {
-                        out.write("Hello!".getBytes());
-                    }
-                    if ("What".equals(par)) {
-                        out.write("What?".getBytes());
+                    switch (par) {
+                        case "Hello" -> out.write("Hello!".getBytes());
+                        case "Exit" -> {
+                            out.flush();
+                            server.close();
+                            System.out.println("The server has been closed.");
+                        }
+                        default -> out.write("What?".getBytes());
                     }
                     out.flush();
-                    if ("Exit".equals(par)) {
-                        server.close();
-                        System.out.println("The server has been closed.");
-                    }
                 }
             }
         }
