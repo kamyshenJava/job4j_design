@@ -1,0 +1,9 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<computer isLaptop="true" displaySize="17" manufacturer="Asus">
+    <procesor manufacturer="Intel" name="i9"/>
+    <disks>
+        <disk>SSD1Tb</disk>
+        <disk>HDD1Tb</disk>
+    </disks>
+</computer>
