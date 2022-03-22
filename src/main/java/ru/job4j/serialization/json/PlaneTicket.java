@@ -21,6 +21,26 @@ public class PlaneTicket {
         this.route = route;
     }
 
+    public boolean isPaid() {
+        return isPaid;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public Person getPassenger() {
+        return passenger;
+    }
+
+    public String[] getRoute() {
+        return route;
+    }
+
     @Override
     public String toString() {
         return "PlaneTicket{"
