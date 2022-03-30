@@ -29,35 +29,35 @@ public class TableEditor implements AutoCloseable {
 
     public void createTable(String tableName) throws Exception {
         String sql = String.format("create table if not exists %s();", tableName);
-        this.getStatement().execute(sql);
+        getStatement(sql);
     }
 
     public void dropTable(String tableName) throws Exception {
         String sql = String.format("drop table if exists %s;", tableName);
-        this.getStatement().execute(sql);
+        getStatement(sql);
     }
 
     public void addColumn(String tableName, String columnName, String type) throws Exception {
         String sql = String.format("ALTER TABLE %s ADD COLUMN %s %s", tableName, columnName, type);
-        this.getStatement().execute(sql);
+        getStatement(sql);
     }
 
     public void dropColumn(String tableName, String columnName) throws Exception {
         String sql = String.format("ALTER TABLE %s DROP COLUMN %s", tableName, columnName);
-        this.getStatement().execute(sql);
+        getStatement(sql);
     }
 
     public void renameColumn(String tableName, String columnName, String newColumnName) throws Exception {
         String sql = String.format("ALTER TABLE %s RENAME COLUMN %s TO %s", tableName, columnName, newColumnName);
-        this.getStatement().execute(sql);
+        getStatement(sql);
     }
 
     public String getTableScheme(String tableName) throws Exception {
         var rowSeparator = "-".repeat(30).concat(System.lineSeparator());
         var header = String.format("%-15s|%-15s%n", "NAME", "TYPE");
         var buffer = new StringJoiner(rowSeparator, rowSeparator, rowSeparator);
-        Statement statement = this.getStatement();
-        buffer.add(header);
+        try (var statement = connection.createStatement()) {
+            buffer.add(header);
             var selection = statement.executeQuery(String.format(
                     "select * from %s limit 1", tableName
             ));
@@ -67,6 +67,7 @@ public class TableEditor implements AutoCloseable {
                         metaData.getColumnName(i), metaData.getColumnTypeName(i))
                 );
             }
+        }
         return buffer.toString();
     }
 
@@ -85,8 +86,10 @@ public class TableEditor implements AutoCloseable {
         return properties;
     }
 
-    private Statement getStatement() throws Exception {
-        return connection.createStatement();
+    private void getStatement(String sql) throws Exception {
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(sql);
+        }
     }
 
     public static void main(String[] args) throws Exception {
