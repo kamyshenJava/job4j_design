@@ -22,14 +22,14 @@ public class ImportDB {
     public List<User> load() {
         List<User> users = new ArrayList<>();
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
-            rd.lines().forEach(line -> users.add(new User(getData(line)[0], getData(line)[1])));
+            rd.lines().forEach(line -> users.add(validateLine(line)));
         } catch (Exception e) {
             e.printStackTrace();
         }
         return users;
     }
 
-    private String[] getData(String line) {
+    private User validateLine(String line) {
         String first = line.split(";")[0];
         String second = line.split(";")[1];
         if (line.split(";").length != 2
@@ -37,7 +37,7 @@ public class ImportDB {
                 || "".equals(second)) {
             throw new IllegalArgumentException();
         }
-        return new String[] {first, second};
+        return new User(first, second);
     }
 
     public void save(List<User> users) throws ClassNotFoundException, SQLException {
