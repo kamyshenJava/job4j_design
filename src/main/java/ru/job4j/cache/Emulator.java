@@ -1,0 +1,88 @@
+package ru.job4j.cache;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Scanner;
+
+public class Emulator {
+
+    DirFileCache cache;
+
+    public Emulator(DirFileCache cache) {
+        this.cache = cache;
+    }
+
+    public void handle() {
+        Scanner scanner = new Scanner(System.in);
+        boolean run = true;
+        while (run) {
+            int choice = menu(scanner);
+            if (choice == 1) {
+                String fileName = getFileName(scanner);
+                putToCache(fileName);
+                System.out.println("Файл загружен в кэш и доступен по ключю: " + fileName);
+            }
+            if (choice == 2) {
+                String fileName = getFileName(scanner);
+                System.out.println(getFromCache(fileName));
+            }
+            if (choice == 3) {
+                run = false;
+                System.out.println("Выход из программы");
+            }
+        }
+    }
+
+    private String getFromCache(String fileName) {
+        return cache.load(fileName);
+    }
+
+    private void putToCache(String fileName) {
+        cache.load(fileName);
+    }
+
+    private int menu(Scanner scanner) {
+        System.out.println("Что бы вы хотели сделать?");
+        System.out.println("1 — загрузить содержимое файла в кэш,");
+        System.out.println("2 — получить содержимое файла из кэша/самого файла,");
+        System.out.println("3 — выйти.");
+        int choice = Integer.parseInt(scanner.nextLine());
+        while (!(choice == 1 || choice == 2 || choice == 3)) {
+            System.out.println("Вы указали неправильный номер. Выберите 1, 2 или 3.");
+            choice = Integer.parseInt(scanner.nextLine());
+        }
+        return choice;
+    }
+
+    private String getFileName(Scanner scanner) {
+        String fileName = "";
+        System.out.println("Укажите название файла");
+        boolean run = true;
+        while (run) {
+            fileName = scanner.nextLine();
+            Path absPath = Path.of(cache.getCachingDir()).resolve(fileName);
+            if (Files.exists(absPath)) {
+                run = false;
+            } else {
+                System.out.println("Неправильное имя файла. Попробуйте снова.");
+            }
+        }
+        return fileName;
+    }
+
+    private static String getDir() {
+        System.out.println("Укажите директорию с файлами");
+        Scanner scanner = new Scanner(System.in);
+        String rsl = scanner.nextLine();
+        while (!Files.isDirectory(Path.of(rsl))) {
+            System.out.println("Вы указали неправильную директорию. Попробуйте снова.");
+            rsl = scanner.nextLine();
+        }
+        return rsl;
+    }
+
+    public static void main(String[] args) {
+        DirFileCache dirFileCache = new DirFileCache(getDir());
+        new Emulator(dirFileCache).handle();
+    }
+}
