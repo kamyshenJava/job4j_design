@@ -14,7 +14,6 @@ public class LargeObjectFinalizer extends PhantomReference<Object> {
     }
 
     public void finalizeResources() {
-        // free resources
         System.out.println("clearing ...");
     }
 
