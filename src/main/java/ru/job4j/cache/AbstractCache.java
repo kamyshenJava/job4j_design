@@ -17,7 +17,7 @@ public abstract class AbstractCache<K, V> {
         if (rsl == null) {
             System.out.println("This file is not in the cache yet. Loading from the file...");
             rsl = load(key);
-            cache.put(key, new SoftReference<>(rsl));
+            put(key, rsl);
         }
         return rsl;
     }
