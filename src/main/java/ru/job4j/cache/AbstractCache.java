@@ -13,9 +13,14 @@ public abstract class AbstractCache<K, V> {
     }
 
     public V get(K key) {
-        return cache.get(key).get();
+        V rsl = cache.getOrDefault(key, new SoftReference<>(null)).get();
+        if (rsl == null) {
+            System.out.println("This file is not in the cache yet. Loading from the file...");
+            rsl = load(key);
+            cache.put(key, new SoftReference<>(rsl));
+        }
+        return rsl;
     }
 
     protected abstract V load(K key);
-
 }

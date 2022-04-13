@@ -19,26 +19,18 @@ public class Emulator {
             int choice = menu(scanner);
             if (choice == 1) {
                 String fileName = getFileName(scanner);
-                putToCache(fileName);
+                cache.put(fileName, cache.load(fileName));
                 System.out.println("Файл загружен в кэш и доступен по ключю: " + fileName);
             }
             if (choice == 2) {
                 String fileName = getFileName(scanner);
-                System.out.println(getFromCache(fileName));
+                System.out.println(cache.get(fileName));
             }
             if (choice == 3) {
                 run = false;
                 System.out.println("Выход из программы");
             }
         }
-    }
-
-    private String getFromCache(String fileName) {
-        return cache.load(fileName);
-    }
-
-    private void putToCache(String fileName) {
-        cache.load(fileName);
     }
 
     private int menu(Scanner scanner) {
