@@ -9,7 +9,7 @@ public class Emulator {
     private static final int LOAD_INTO_CACHE = 1;
     private static final int GET_FROM_CACHE = 2;
     private static final int TERMINATE = 3;
-    DirFileCache cache;
+    private DirFileCache cache;
 
     public Emulator(DirFileCache cache) {
         this.cache = cache;
