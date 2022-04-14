@@ -20,7 +20,7 @@ public class DirFileCache extends AbstractCache<String, String> {
     protected String load(String key) {
         String data = "";
         try {
-            data = Files.readString(Path.of(key));
+            data = Files.readString(Path.of(cachingDir, key));
         } catch (IOException e) {
             e.printStackTrace();
         }

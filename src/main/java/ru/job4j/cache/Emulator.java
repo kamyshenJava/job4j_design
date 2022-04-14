@@ -6,6 +6,9 @@ import java.util.Scanner;
 
 public class Emulator {
 
+    private static final int LOAD_INTO_CACHE = 1;
+    private static final int GET_FROM_CACHE = 2;
+    private static final int TERMINATE = 3;
     DirFileCache cache;
 
     public Emulator(DirFileCache cache) {
@@ -17,16 +20,16 @@ public class Emulator {
         boolean run = true;
         while (run) {
             int choice = menu(scanner);
-            if (choice == 1) {
+            if (choice == LOAD_INTO_CACHE) {
                 String fileName = getFileName(scanner);
                 cache.put(fileName, cache.load(fileName));
                 System.out.println("Файл загружен в кэш и доступен по ключю: " + fileName);
             }
-            if (choice == 2) {
+            if (choice == GET_FROM_CACHE) {
                 String fileName = getFileName(scanner);
                 System.out.println(cache.get(fileName));
             }
-            if (choice == 3) {
+            if (choice == TERMINATE) {
                 run = false;
                 System.out.println("Выход из программы");
             }
