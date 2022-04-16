@@ -27,9 +27,13 @@ public class CinemaTest {
     public void whenFind() {
         Cinema cinema = new Cinema3D();
         Session session = new Session3D();
+        Session session2 = new Session3D();
+        Session session3 = new Session3D();
         cinema.add(session);
+        cinema.add(session2);
+        cinema.add(session3);
         List<Session> sessions = cinema.find(ses -> true);
-        assertThat(sessions, is(Arrays.asList(session)));
+        assertThat(sessions, is(Arrays.asList(session, session2, session3)));
     }
 
     @Test
