@@ -9,7 +9,6 @@ import java.util.Map;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
-@Ignore
 public class GeneratorTest {
 
     @Ignore
