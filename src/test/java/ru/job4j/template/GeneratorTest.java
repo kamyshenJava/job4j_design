@@ -12,6 +12,7 @@ import static org.junit.Assert.*;
 @Ignore
 public class GeneratorTest {
 
+    @Ignore
     @Test
     public void whenGenerate() {
         String template = "I am a ${name}, Who are ${subject}? ";
@@ -23,6 +24,7 @@ public class GeneratorTest {
         assertThat(gen.produce(template, args), is(expected));
     }
 
+    @Ignore
     @Test(expected = IllegalArgumentException.class)
     public void whenNotAllKeysThenException() {
         String template = "I am a ${name}, Who are ${subject}? ";
@@ -32,6 +34,7 @@ public class GeneratorTest {
         gen.produce(template, args);
     }
 
+    @Ignore
     @Test(expected = IllegalArgumentException.class)
     public void whenExcessKeysThenException() {
         String template = "I am a ${name}, Who are ${subject}? ";
