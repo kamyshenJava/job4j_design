@@ -14,6 +14,7 @@ import java.util.List;
 @Ignore
 public class CinemaTest {
 
+    @Ignore
     @Test
     public void whenBuy() {
         Account account = new AccountCinema();
@@ -25,6 +26,7 @@ public class CinemaTest {
         assertThat(ticket, is(new Ticket3D()));
     }
 
+    @Ignore
     @Test
     public void whenFind() {
         Cinema cinema = new Cinema3D();
@@ -38,6 +40,7 @@ public class CinemaTest {
         assertThat(sessions, is(Arrays.asList(session, session2, session3)));
     }
 
+    @Ignore
     @Test(expected = IllegalArgumentException.class)
     public void whenBuySameSeatThenException() {
         Account account = new AccountCinema();
@@ -49,6 +52,7 @@ public class CinemaTest {
         Ticket ticket2 = cinema.buy(account, session, 1, 1, date);
     }
 
+    @Ignore
     @Test(expected = IllegalArgumentException.class)
     public void whenBuyAndSessionNotExistThenException() {
         Account account = new AccountCinema();
