@@ -8,4 +8,6 @@ public interface FileFinder {
     void validate(Path path);
 
     List<Path> find(Path dir);
+
+    void print(List<Path> result);
 }
