@@ -36,7 +36,7 @@ public abstract class Storage {
     }
 
     public List<Food> getAvailableLots() {
-        return availableLots;
+        return List.copyOf(availableLots);
     }
 
     public long daysBetween(LocalDate ld1, LocalDate ld2) {

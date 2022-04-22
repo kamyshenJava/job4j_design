@@ -8,11 +8,10 @@ public class Shop extends Storage {
 
     @Override
     public boolean accept(Food food, LocalDate date) {
-        boolean accepted = ifFoodFitsStorage(food, date);
+        boolean accepted = super.accept(food, date);
         if (accepted) {
             LocalDate expireDate = food.getExpiryDate();
             LocalDate createDate = food.getCreateDate();
-            getAvailableLots().add(food);
             if (daysBetween(createDate, date) > (daysBetween(createDate, expireDate)) * 0.75) {
                 food.setPrice(food.getPrice() * (1 - food.getDiscount() / 100));
             }
