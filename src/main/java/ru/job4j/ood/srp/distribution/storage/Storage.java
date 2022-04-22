@@ -35,14 +35,6 @@ public abstract class Storage {
         return foodsToDistribute;
     }
 
-    public List<Food> getAvailableLots() {
-        return availableLots;
-    }
-
-    public void setAvailableLots(List<Food> availableLots) {
-        this.availableLots = availableLots;
-    }
-
     public long daysBetween(LocalDate ld1, LocalDate ld2) {
         return Math.abs(ChronoUnit.DAYS.between(ld1, ld2)) + 1;
     }
