@@ -24,6 +24,7 @@ public class ControlQuality {
     }
 
     public void redistribute(LocalDate date) {
+
         List<Food> lotsToRedistribute = new ArrayList<>();
         for (Storage storage : storages) {
             lotsToRedistribute.addAll(storage.distribute(date));
