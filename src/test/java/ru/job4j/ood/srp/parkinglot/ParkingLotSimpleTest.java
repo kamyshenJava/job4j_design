@@ -72,4 +72,15 @@ public class ParkingLotSimpleTest {
         assertEquals(0, pl.getCarCount());
         assertEquals(1, pl.getTruckCount());
     }
+
+    @Test
+    public void whenNoPlacesForCarsThenFalse() {
+        Vehicle car = new Car("BMW");
+        ParkingLotSimple pl = new ParkingLotSimple(1, 2);
+        assertTrue(pl.accept(car));
+        assertFalse(pl.accept(car));
+        assertFalse(pl.accept(car));
+        assertEquals(1, pl.getCarCount());
+    }
+
 }

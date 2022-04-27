@@ -28,11 +28,11 @@ public class ParkingLotSimple implements ParkingLot {
             accepted = true;
             parkedCars.add(vehicle);
             carCount++;
-        } else if (parkingPlacesTruck > truckCount) {
+        } else if (size > Car.SIZE && parkingPlacesTruck > truckCount) {
                 accepted = true;
                 parkedTrucks.add(vehicle);
                 truckCount++;
-            } else if (parkingPlacesCar - carCount >= size) {
+            } else if (size > Car.SIZE && parkingPlacesCar - carCount >= size) {
                 accepted = true;
                 parkedCars.add(vehicle);
                 carCount += size;
@@ -41,13 +41,17 @@ public class ParkingLotSimple implements ParkingLot {
     }
 
     @Override
-    public void release(Vehicle vehicle) {
+    public boolean release(Vehicle vehicle) {
+        boolean released = false;
         int size = vehicle.getSize();
         if (parkedCars.remove(vehicle)) {
             carCount -= size;
+            released = true;
         } else if (parkedTrucks.remove(vehicle)) {
             truckCount--;
+            released = true;
         }
+        return released;
     }
 
     public int getCarCount() {
