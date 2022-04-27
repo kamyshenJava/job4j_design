@@ -8,30 +8,29 @@ public class SimpleMenu implements Menu {
 
     @Override
     public boolean add(String parentName, String childName, ActionDelegate actionDelegate) {
-        Optional<ItemInfo> parent = findItem(parentName);
-        boolean hasParent = parent.isPresent();
-        boolean isNull = Objects.equals(parentName, Menu.ROOT);
-        if (isNull) {
+        boolean added = false;
+        if (findItem(childName).isPresent()) {
+            System.out.println("Such item already exists!");
+        } else if (!Objects.equals(parentName, Menu.ROOT)) {
+            Optional<ItemInfo> parent = findItem(parentName);
+            if (parent.isPresent()) {
+                MenuItem newItem = new SimpleMenuItem(childName, actionDelegate);
+                parent.get().menuItem.getChildren().add(newItem);
+                added = true;
+            } else {
+                System.out.println("Such parent name doesn't exist!");
+            }
+        } else {
             MenuItem newItem = new SimpleMenuItem(childName, actionDelegate);
             rootElements.add(newItem);
+            added = true;
         }
-        if (hasParent) {
-            MenuItem newItem = new SimpleMenuItem(childName, actionDelegate);
-            parent.get().menuItem.getChildren().add(newItem);
-        }
-        return hasParent || isNull;
+        return added;
     }
 
     @Override
     public Optional<MenuItemInfo> select(String itemName) {
-        Optional<MenuItemInfo> rsl = Optional.empty();
-        Optional<ItemInfo> item = findItem(itemName);
-        if (item.isPresent()) {
-            MenuItem mi = item.get().menuItem;
-            String num = item.get().number;
-            rsl = Optional.of(new MenuItemInfo(mi, num));
-        }
-        return rsl;
+        return findItem(itemName).map(i -> new MenuItemInfo(i.menuItem, i.number));
     }
 
     @Override
